@@ -1,0 +1,139 @@
+%% ------------------------------------------------------------
+%% Beyond the Scoresheet - one-page proposal (ACM two-column style)
+%% Compile with pdfLaTeX in Overleaf (the default compiler).
+%% ------------------------------------------------------------
+\documentclass[sigconf,nonacm]{acmart}
+
+% Remove the ACM copyright / conference boxes so it looks like the sample
+\settopmatter{printacmref=false}
+\setcopyright{none}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+\pagestyle{plain}
+
+\begin{document}
+
+%% ---------------- TITLE & AUTHORS ----------------
+\title{Modelling Football Match Events and Player Connections: Bayer Leverkusen 2023/24}
+\subtitle{Project Codename: Beyond the Scoresheet}
+
+\author{Meet Hemang Shah}
+\affiliation{\institution{University of Victoria}}
+\email{meetshah2@uvic.ca}
+
+\author{Sakshi Pinkeshkumar Patel}
+\affiliation{\institution{University of Victoria}}
+\email{sakshipinkeshkumarp@uvic.ca}
+
+\author{Ayush Bharatbhai Patel}
+\affiliation{\institution{University of Victoria}}
+\email{ayushbharatbhaipatel@uvic.ca}
+
+%% ---------------- ABSTRACT ----------------
+\begin{abstract}
+This proposal tries to solve a data-modeling problem using a real, public sports dataset: showing how matches, teams, players, lineups, and timestamped match events are linked across all 34 Bundesliga games that Bayer 04 Leverkusen played during its historic, undefeated 2023–24 title-winning season.\cite{reuters2024}. Using StatsBomb's Open Data (competition ID~9, season
+ID~281) \cite{statsbomb-open,statsbomb-list}, we study how relational and
+semantic (RDF/OWL) representations preserve and expose the same
+relationships --- such as a goal's link to its scorer, lineup context, and an
+explicitly source-coded assist pass --- for a shared set of
+relationship-oriented queries. The project's contribution is a way to show and rate things, not a way to predict or explain why the club won. 
+\end{abstract}
+
+\keywords{Sports Event Data Model, Relationship Modelling, Semantic Interoperability}
+
+\maketitle
+
+%% ---------------- 1 INTRODUCTION ----------------
+\section{Introduction}
+A football game involves many interacting factors, such as who participated,
+where they played, and what they did, as well as shots, goals, cards,
+replacements, and how everything worked together to decide the result. This
+study examines the 2023--2024 Bayer Leverkusen Bundesliga season. Key domain
+entities include matches, teams, players, positions, formations, and discrete
+match events \cite{schemaorg}. The relationships between entities make this
+domain difficult to represent: a goal cannot be separated from its scorer,
+assist, passing sequence, pitch formation, or substitutions
+\cite{statsbomb-match}. This project addresses the data-modelling problem of
+how to represent the events of a football match --- the players and teams
+involved, their actions, and the relationships that connect events across a
+match or a season --- in a way that is precise, relationally complete, and
+reusable across information needs \cite{cdf2025}, so that humans and
+computational systems can reliably reconstruct who was involved in any given
+event, trace how one event led to another \cite{provo}, and compare events.
+
+%% ---------------- 2 MOTIVATION ----------------
+\section{Motivation}
+An integrated representation of football event data can link player, match,
+lineup, and event information that is currently scattered among separate
+records. This provides a unified view of player participation, positional
+duties, substitutions, and subsequent actions across games, and enables more
+complex queries that trace player--event interactions while keeping their time
+and match context. Football analysts and scholars may find this useful for
+quicker retrieval, comparison, and reuse of detailed match information.
+Explicitly expressed relations also provide a cleaner base for automated
+querying and knowledge extraction by computational systems. Hence, this study
+explores ways to represent related football information while retaining key
+contextual linkages.
+
+\subsection{Motivating Example}
+Let's say a Leverkusen player comes on as a replacement and creates a chance to score. To understand what that player did, several records must be linked: the
+substitution, the player's position in the game, the next pass or shot, and
+the game in which it happened. Current event records capture these facts in
+isolation, but the relationships between them are not explicitly modelled as
+one connected journey, which makes it difficult to track a player's path from
+joining the match to creating an opportunity. This project encodes these
+linkages so that such connected occurrences can be queried jointly, while
+keeping their temporal and match-specific context.
+
+%% ---------------- 3 TEAM JUSTIFICATION ----------------
+\section{Team Justification}
+Our team is composed of three people with complementary knowledge. All
+participants have shared coursework experience in database architecture and
+data administration. One member has football domain expertise, another has
+hands-on experience with semantic web technologies, and another has hands-on
+experience with applied artificial intelligence. This combination supports
+domain analysis, data modelling, semantic representation, execution, and
+evaluation of the project. Every member will be involved in all project phases,
+and progress will be documented via our shared GitHub repository and commit
+history.
+
+%% ---------------- REFERENCES ----------------
+\begin{thebibliography}{9}
+
+\bibitem{reuters2024}
+Reuters.
+\newblock Leverkusen become first Bundesliga team to go all season without
+  defeat.
+\newblock 18 May 2024.
+
+\bibitem{statsbomb-open}
+StatsBomb.
+\newblock StatsBomb Open Data, GitHub repository.
+\newblock \url{https://github.com/statsbomb/open-data}
+
+\bibitem{statsbomb-list}
+StatsBomb.
+\newblock Bundesliga 2023/24 match list, competition~9 / season~281.
+
+\bibitem{schemaorg}
+Schema.org.
+\newblock SportsEvent.
+\newblock \url{https://schema.org/SportsEvent}
+
+\bibitem{statsbomb-match}
+StatsBomb.
+\newblock Bayer Leverkusen v Werder Bremen, 14 April 2024, event file, match
+  3895302.
+
+\bibitem{cdf2025}
+Anzer et al.
+\newblock Common Data Format (CDF) for Soccer Match Data.
+\newblock arXiv:2505.15820, 2025.
+
+\bibitem{provo}
+W3C.
+\newblock PROV-O: The PROV Ontology.
+\newblock \url{https://www.w3.org/TR/prov-o/}
+
+\end{thebibliography}
+
+\end{document}
