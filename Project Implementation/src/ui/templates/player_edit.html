@@ -1,6 +1,6 @@
 {% extends "base.html" %}{% block body %}
 <h1>Player #{{ p.Id }}</h1><p class="sub">StatsBomb id {{ p.SbPlayerId }}</p>
 <form method="post" class="card"><label>Name<input name="name" value="{{ p.Name }}" required></label><p><button class="btn">Save name</button> <a class="btn sec" href="{{ url_for('players') }}">Back</a></p></form>
-<form method="post" action="{{ url_for('player_delete', player_id=p.Id) }}" class="card" onsubmit="return confirm('Delete this player?')">
+<form method="post" action="{{ url_for('player_delete', player_id=p.Id) }}" class="card danger-zone" onsubmit="return confirm('Delete this player?')">
 <b>Delete player</b><p class="note">Refused if the player has recorded events or is named as an intended target.</p><button class="btn danger">Delete player</button></form>
 {% endblock %}
