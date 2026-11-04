@@ -1,0 +1,37 @@
+erDiagram
+  Team ||--o{ MatchTeam : "plays in"
+  Match ||--|{ MatchTeam : "has 2"
+  MatchTeam ||--o{ AppearsFor : "squad"
+  Player ||--o{ AppearsFor : "appears for"
+  Match ||--|{ MatchEvent : contains
+  Player ||--o{ MatchEvent : "performed by"
+  Player |o--o{ MatchEvent : "intended for"
+  MatchEvent |o--o| MatchEvent : "assists (pass to shot)"
+  Team { int Id PK
+    int SbTeamId UK
+    string Name UK }
+  Player { int Id PK
+    int SbPlayerId UK
+    string Name }
+  Match { int Id PK
+    int SbMatchId UK
+    date MatchDate }
+  MatchTeam { int Id PK
+    int MatchId FK
+    int TeamId FK
+    string HomeOrAway }
+  AppearsFor { int Id PK
+    int MatchId FK
+    int TeamId FK
+    int PlayerId FK }
+  MatchEvent { int Id PK
+    string SbEventUuid UK
+    int MatchId FK
+    int PlayerId FK
+    string EventType
+    int Period
+    int Minute
+    int Second
+    string Outcome
+    int IntendedForPlayerId FK
+    int AssistedShotEventId FK }

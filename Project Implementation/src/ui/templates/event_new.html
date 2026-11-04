@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block body %}
+<h1>Add event</h1><p class="sub">Step 1: choose the match. Step 2: fill in the event. The player must be in that match's squad.</p>
+<div class="card"><form method="get" class="filters"><label>Match<select name="match_id" onchange="this.form.submit()"><option value="">Choose…</option>
+{% for m in matches %}<option value="{{ m.Id }}" {{ 'selected' if match_id == m.Id }}>{{ m.MatchDate }} · {{ m.Opponent }} ({{ m.Venue[0] }})</option>{% endfor %}</select></label><button class="btn sec">Load squad</button></form></div>
+{% if match_id %}<form method="post" class="card"><input type="hidden" name="match_id" value="{{ match_id }}"><div class="form-grid">
+<label>Player (performed by)<select name="player_id" required><option value="">Choose…</option>{% for p in squad %}<option value="{{ p.Id }}" {{ 'selected' if form.get('player_id') == p.Id|string }}>{{ p.Name }} — {{ p.Team }}</option>{% endfor %}</select></label>
+<label>Event type<select name="event_type" required>{% for t in types %}<option {{ 'selected' if (form.get('event_type') or 'Pass') == t }}>{{ t }}</option>{% endfor %}</select></label>
+<label>Period (1–5)<input type="number" name="period" min="1" max="5" value="{{ form.get('period', 1) }}" required></label>
+<label>Minute<input type="number" name="minute" min="0" max="130" value="{{ form.get('minute', 0) }}" required></label>
+<label>Second<input type="number" name="second" min="0" max="59" value="{{ form.get('second', 0) }}" required></label>
+<label>Outcome (optional)<input name="outcome" value="{{ form.get('outcome', '') }}" placeholder="Complete, Goal, Saved…"></label>
+<label>Intended for (Pass only)<select name="intended_for"><option value="">—</option>{% for p in squad %}<option value="{{ p.Id }}">{{ p.Name }}</option>{% endfor %}</select></label>
+<label>Assists shot (Pass only)<select name="assisted_shot"><option value="">—</option>{% for s in shots %}<option value="{{ s.Id }}">{{ s.Name }} · P{{ s.Period }} {{ s.Minute }}:{{ '%02d'|format(s.Second) }} · {{ s.Outcome }}</option>{% endfor %}</select></label>
+</div><p><button class="btn">Add event</button></p></form>{% endif %}
+{% endblock %}

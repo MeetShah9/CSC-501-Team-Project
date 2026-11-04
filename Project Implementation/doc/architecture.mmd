@@ -1,0 +1,36 @@
+flowchart LR
+  subgraph SRC["Source data (StatsBomb Open Data, comp 9 / season 281)"]
+    M["matches/281.json"]:::d
+    L["lineups/‹match›.json"]:::d
+    E["events/‹match›.json"]:::d
+  end
+  subgraph BIZ["Business layer  src/biz"]
+    DL["download.py<br/>fetch raw files"]
+    ETL["etl.py<br/>parse, map, link<br/>pass → shot"]
+    SV["services.py<br/>validation and<br/>business rules"]
+    DM["demo.py<br/>runs SQL demos"]
+  end
+  subgraph DAL["Data layer  src/dal"]
+    DB["database.py<br/>connect, PRAGMA FK ON"]
+    RP["repositories.py<br/>parameterised SQL"]
+    QS["queries.py"]
+    SQL["models/relational/sql<br/>01 schema · 02 insert<br/>03 select · 04 update/delete"]
+  end
+  subgraph STORE["Storage"]
+    SQLITE[("SQLite<br/>leverkusen.db")]
+  end
+  subgraph UI["User-interface layer  src/ui"]
+    APP["Flask app + templates<br/>search · add · edit · delete"]
+  end
+  USER(["End user<br/>(browser)"])
+  M & L & E -- "download" --> DL --> ETL
+  ETL -- "INSERT (bulk load)" --> DB
+  SQL -- "DDL / DML scripts" --> DB
+  DB <--> SQLITE
+  USER -- "HTTP forms" --> APP
+  APP -- "calls" --> SV
+  SV -- "validated requests" --> RP
+  RP --> DB
+  APP -- "SELECT demos" --> QS --> DB
+  DM --> SQL
+  classDef d fill:#eef0f3,stroke:#8a94a0

@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block body %}
+<h1>Players</h1><p class="sub">{{ rows|length }} players shown.</p>
+<div class="card"><form class="filters" method="get"><label>Name contains<input name="q" value="{{ q }}" placeholder="e.g. Wirtz"></label><button class="btn">Search</button></form></div>
+<table><tr><th>Name</th><th>StatsBomb id</th><th>Matches</th><th>Events</th><th></th></tr>
+{% for p in rows %}<tr><td>{{ p.Name }}</td><td>{{ p.SbPlayerId }}</td><td>{{ p.Matches }}</td><td>{{ p.Events }}</td><td><a href="{{ url_for('player_edit', player_id=p.Id) }}">edit / delete</a> · <a href="{{ url_for('events', player=p.Name) }}">events</a></td></tr>{% endfor %}</table>
+{% endblock %}

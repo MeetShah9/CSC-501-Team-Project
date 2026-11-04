@@ -70,4 +70,3 @@ and StatsBomb when reusing the code or data.
 
 ## 7. License
 Code: MIT (`LICENSE`). Data: StatsBomb Open Data terms (attribution required).
-

@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block body %}
+<h1>Event search</h1><p class="sub">{{ "{:,}".format(total) }} matching events.</p>
+<div class="card"><form class="filters" method="get">
+<label>Match<select name="match_id"><option value="">All matches</option>{% for m in matches %}<option value="{{ m.Id }}" {{ 'selected' if f.match_id == m.Id|string }}>{{ m.MatchDate }} · {{ m.Opponent }} ({{ m.Venue[0] }})</option>{% endfor %}</select></label>
+<label>Player contains<input name="player" value="{{ f.player }}" placeholder="e.g. Wirtz"></label>
+<label>Event type<select name="event_type"><option value="">Any</option>{% for t in types %}<option {{ 'selected' if f.event_type == t }}>{{ t }}</option>{% endfor %}</select></label>
+<label>Outcome<input name="outcome" value="{{ f.outcome }}" placeholder="e.g. Goal"></label>
+<label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" name="assists_only" value="1" style="min-width:0" {{ 'checked' if f.assists_only }}> Assisting passes only</label>
+<button class="btn">Search</button><a class="btn sec" href="{{ url_for('events') }}">Reset</a></form></div>
+<table><tr><th>Date</th><th>Time</th><th>Player</th><th>Type</th><th>Outcome</th><th>Intended for</th><th>Assists shot by</th><th></th></tr>
+{% for e in rows %}<tr><td>{{ e.MatchDate }}</td><td>P{{ e.Period }} {{ e.Minute }}:{{ '%02d'|format(e.Second) }}</td><td>{{ e.Player }}</td><td>{{ e.EventType }}</td>
+<td>{{ e.Outcome or '' }}</td><td>{{ e.IntendedFor or '' }}</td>
+<td>{% if e.AssistedShooter %}{{ e.AssistedShooter }} <span class="tag {{ 'pill-goal' if e.AssistedShotOutcome == 'Goal' }}">{{ e.AssistedShotOutcome }}</span>{% endif %}</td>
+<td><a href="{{ url_for('event_edit', event_id=e.Id) }}">edit / delete</a></td></tr>
+{% else %}<tr><td colspan="8">No events match these filters.</td></tr>{% endfor %}</table>
+<div class="pager">{% if page > 1 %}<a href="{{ url_for('events', page=page-1, **args) }}">← Prev</a>{% endif %}
+<span>Page {{ page }} of {{ pages }}</span>{% if page < pages %}<a href="{{ url_for('events', page=page+1, **args) }}">Next →</a>{% endif %}</div>
+{% endblock %}

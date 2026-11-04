@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block body %}
+<h1>Demonstration SELECT queries</h1><p class="sub">Defined in <code>src/dal/models/relational/sql/03_select_queries.sql</code> and executed live (first 10 rows).</p>
+{% for q in queries %}<div class="card"><h2 style="margin-top:0">{{ q.title }}</h2><pre>{{ q.sql }}</pre>
+<table><tr>{% for c in q.cols %}<th>{{ c }}</th>{% endfor %}</tr>{% for r in q.rows %}<tr>{% for v in r %}<td>{{ v }}</td>{% endfor %}</tr>{% endfor %}</table>
+<p class="note">{{ q.n }} row(s) in total.</p></div>{% endfor %}
+{% endblock %}

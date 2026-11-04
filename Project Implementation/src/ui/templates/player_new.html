@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block body %}
+<h1>Add player to a match squad</h1><p class="sub">Find-or-create: an existing player with the same name is reused; otherwise a new player is created, then the appearance is recorded.</p>
+<div class="card"><form method="get" class="filters"><label>Match<select name="match_id" onchange="this.form.submit()"><option value="">Choose…</option>
+{% for m in matches %}<option value="{{ m.Id }}" {{ 'selected' if match_id == m.Id }}>{{ m.MatchDate }} · {{ m.Opponent }} ({{ m.Venue[0] }})</option>{% endfor %}</select></label><button class="btn sec">Load teams</button></form></div>
+{% if match_id %}<form method="post" class="card"><input type="hidden" name="match_id" value="{{ match_id }}"><div class="form-grid">
+<label>Player name<input name="name" value="{{ form.get('name', '') }}" required></label>
+<label>Team<select name="team_id" required>{% for t in teams %}<option value="{{ t.Id }}">{{ t.Name }} ({{ t.HomeOrAway }})</option>{% endfor %}</select></label></div>
+<p><button class="btn">Add to squad</button></p></form>{% endif %}
+{% endblock %}

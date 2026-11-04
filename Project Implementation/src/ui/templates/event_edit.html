@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block body %}
+<h1>Event #{{ e.Id }}</h1><p class="sub">{{ e.MatchDate }} · {{ e.Player }} · {{ e.EventType }}{% if e.IntendedFor %} → intended for {{ e.IntendedFor }}{% endif %}{% if e.AssistedShooter %} · assists {{ e.AssistedShooter }}'s shot ({{ e.AssistedShotOutcome }}){% endif %}</p>
+<form method="post" class="card"><div class="form-grid">
+<label>Period<input type="number" name="period" min="1" max="5" value="{{ e.Period }}" required></label>
+<label>Minute<input type="number" name="minute" min="0" max="130" value="{{ e.Minute }}" required></label>
+<label>Second<input type="number" name="second" min="0" max="59" value="{{ e.Second }}" required></label>
+<label>Outcome<input name="outcome" value="{{ e.Outcome or '' }}"></label></div>
+<p><button class="btn">Save changes</button> <a class="btn sec" href="{{ url_for('events', match_id=e.MatchId) }}">Back to list</a></p></form>
+<form method="post" action="{{ url_for('event_delete', event_id=e.Id) }}" class="card" onsubmit="return confirm('Delete this event?')">
+<b>Delete event</b><p class="note">Refused by the database if an assisting pass still points at this shot.</p><button class="btn danger">Delete event</button></form>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block body %}
+<h1>Dashboard</h1><p class="sub">Relational database behind the project: matches, teams, players, squads and timestamped match events.</p>
+<div class="grid">{% for k, v in counts.items() %}<div class="stat"><b>{{ "{:,}".format(v) }}</b><span>{{ k }} rows</span></div>{% endfor %}</div>
+<div class="card" style="margin-top:20px"><h2 style="margin-top:0">What you can do</h2>
+<p><b>Retrieve</b> – search <a href="{{ url_for('events') }}">events</a> by match, player, type, outcome, or only the passes that assist a shot; browse <a href="{{ url_for('players') }}">players</a>.<br>
+<b>Insert</b> – <a href="{{ url_for('event_new') }}">add an event</a> (optionally with an intended-for player and assisted shot) or <a href="{{ url_for('player_new') }}">add a player to a match squad</a>.<br>
+<b>Update / delete</b> – open an event or player from the lists; the database refuses deletes that would break referential integrity.<br>
+<b>Query</b> – see the report's <a href="{{ url_for('queries_page') }}">SELECT queries</a> run live.</p></div>
+{% endblock %}

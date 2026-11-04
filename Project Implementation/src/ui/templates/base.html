@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Beyond the Scoresheet{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head><body>
+<header><div class="brand">Beyond the <span>Scoresheet</span> <small style="font-weight:400;color:#aaa">· Leverkusen 2023/24</small></div>
+<nav><a href="{{ url_for('index') }}">Dashboard</a><a href="{{ url_for('matches') }}">Matches</a>
+<a href="{{ url_for('events') }}">Events</a><a href="{{ url_for('event_new') }}">Add event</a>
+<a href="{{ url_for('players') }}">Players</a><a href="{{ url_for('player_new') }}">Add player to squad</a>
+<a href="{{ url_for('queries_page') }}">SQL queries</a></nav></header>
+<main>{% with msgs = get_flashed_messages(with_categories=true) %}{% for cat, m in msgs %}<div class="flash {{ cat }}">{{ m }}</div>{% endfor %}{% endwith %}
+{% block body %}{% endblock %}</main></body></html>
