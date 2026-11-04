@@ -1,6 +1,6 @@
-{% extends "base.html" %}{% block body %}
+{% extends "base.html" %}{% import "_macros.html" as ui %}{% block body %}
 <h1>Matches</h1><p class="sub">All {{ matches|length }} Bundesliga matches of Bayer Leverkusen, 2023/24.</p>
-<table><tr><th>Date</th><th>Venue</th><th>Opponent</th><th>StatsBomb id</th><th></th></tr>
-{% for m in matches %}<tr><td>{{ m.MatchDate }}</td><td>{{ m.Venue }}</td><td>{{ m.Opponent }}</td><td>{{ m.SbMatchId }}</td>
-<td><a href="{{ url_for('events', match_id=m.Id) }}">events</a> · <a href="{{ url_for('events', match_id=m.Id, event_type='Shot') }}">shots</a></td></tr>{% endfor %}</table>
+<div class="table-wrap"><table><tr><th>Date</th><th>Venue</th><th>Opponent</th><th>StatsBomb id</th><th></th></tr>
+{% for m in matches %}<tr><td class="nowrap">{{ m.MatchDate }}</td><td>{{ ui.venue(m.Venue) }}</td><td>{{ m.Opponent }}</td><td>{{ m.SbMatchId }}</td>
+<td class="row-actions"><a href="{{ url_for('events', match_id=m.Id) }}">events</a> · <a href="{{ url_for('events', match_id=m.Id, event_type='Shot') }}">shots</a></td></tr>{% endfor %}</table></div>
 {% endblock %}
