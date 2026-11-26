@@ -14,7 +14,7 @@ Scopes
   sample (default, committed to the repo): every team, player, match and appearance,
       every Shot, every Pass that assists a shot, and every event of the showcase match
       (SHOWCASE_SB_MATCH_ID). Season-level goal / assist queries are therefore complete.
-  full: all 137k events (about 1.2M triples, written to data/preprocessed/).
+  full: all 137k events (about 1.06M triples, written to data/preprocessed/).
 """
 import json
 from pathlib import Path
