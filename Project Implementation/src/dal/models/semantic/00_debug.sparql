@@ -1,0 +1,41 @@
+# =============================================================================
+# 00_debug.sparql -- debugging queries (manual, Appendix B)
+# Each block starts with "# name: <id> | <title>" and runs on its own
+# (copy it into Conductor -> Linked Data -> SPARQL, or http://localhost:8890/sparql).
+# =============================================================================
+
+# name: list_graphs | B.1 All knowledge graphs in the triple store
+SELECT DISTINCT ?graph
+WHERE { GRAPH ?graph { ?s ?p ?o } }
+
+# name: all_triples | B.2 All triples (schema and data) in the Leverkusen graph (first 50)
+SELECT ?s ?p ?o
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> { ?s ?p ?o } }
+LIMIT 50
+
+# name: class_triples | B.3 All triples about classes (TBox) in the Leverkusen graph
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?class ?p ?o
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+          ?class a owl:Class ; ?p ?o .
+          FILTER(isIRI(?class)) } }
+ORDER BY ?class ?p
+
+# name: class_triples_all_graphs | B.4 Classes declared in all knowledge graphs (counts)
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?graph (COUNT(DISTINCT ?class) AS ?classes)
+WHERE { GRAPH ?graph { ?class a owl:Class . FILTER(isIRI(?class)) } }
+GROUP BY ?graph
+ORDER BY DESC(?classes)
+
+# name: triple_count | Number of triples in the Leverkusen graph
+SELECT (COUNT(*) AS ?triples)
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> { ?s ?p ?o } }
+
+# name: instances_per_class | Individuals per class (ABox overview)
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?class (COUNT(?x) AS ?individuals)
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+          ?x a ?class . ?class a owl:Class } }
+GROUP BY ?class
+ORDER BY DESC(?individuals)

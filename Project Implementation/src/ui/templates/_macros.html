@@ -1,0 +1,10 @@
+{# Small display helpers shared by the templates (no logic, only presentation). #}
+{% macro outcome(o) -%}
+{%- if o -%}
+{%- set good = ['Complete', 'Success', 'Won', 'Success In Play', 'Success To Team', 'Success Out', 'In Play Safe'] -%}
+{%- set bad = ['Incomplete', 'Lost', 'Off T', 'Wayward', 'Out', 'Fail', 'Lost In Play', 'Lost Out', 'Unknown', 'Pass Offside', 'Success To Opposition', 'In Play Danger'] -%}
+<span class="tag {{ 'goal' if o == 'Goal' else ('good' if o in good else ('bad' if o in bad else '')) }}">{{ o }}</span>
+{%- endif -%}
+{%- endmacro %}
+{% macro clock(e) -%}<span class="clock"><i>P{{ e.Period }}</i>{{ e.Minute }}:{{ '%02d'|format(e.Second) }}</span>{%- endmacro %}
+{% macro venue(v) -%}<span class="tag {{ 'home' if v == 'Home' else 'away' }}">{{ v }}</span>{%- endmacro %}

@@ -1,0 +1,23 @@
+flowchart TB
+  T["lev:Team"]:::c
+  P["lev:Player"]:::c
+  M["lev:Match"]:::c
+  A["lev:Appearance<br/>(association class,<br/>hasKey: appearanceIn, appearanceOf)"]:::c
+  E["lev:MatchEvent<br/>(hasKey: sbEventUuid)"]:::c
+  PA["lev:Pass"]:::c
+  SH["lev:Shot"]:::c
+  G["lev:Goal ≡ Shot ⊓ (outcome value 'Goal')"]:::c
+  O["Carry, Pressure, BallReceipt,<br/>Duel, … (24 more, all disjoint)"]:::c
+  M -- "homeTeam =1 · awayTeam =1<br/>(⊑ hasTeam =2)" --> T
+  A -- "appearanceOf =1" --> P
+  A -- "appearanceFor =1" --> T
+  A -- "appearanceIn =1" --> M
+  E -- "inMatch =1 (functional)" --> M
+  E -- "performedBy =1 (functional)" --> P
+  PA -- "intendedFor ≤1" --> P
+  PA -- "assists ≤1<br/>(functional, inverse functional)" --> SH
+  PA -. "subClassOf" .-> E
+  SH -. "subClassOf" .-> E
+  O -. "subClassOf" .-> E
+  G -. "subClassOf" .-> SH
+  classDef c fill:#fff,stroke:#b5121b,stroke-width:1.5px

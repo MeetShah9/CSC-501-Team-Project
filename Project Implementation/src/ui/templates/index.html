@@ -1,5 +1,7 @@
 {% extends "base.html" %}{% block body %}
-<section class="pitch"><span class="season">Bundesliga · 2023/24</span><h1>Dashboard</h1><p>Relational database behind the project: every Bayer Leverkusen league match, the teams, players and squads, and every timestamped match event.</p></section>
+<section class="pitch"><div class="pitch-text"><span class="season">Bundesliga · 2023/24</span><h1>Dashboard</h1><p>Relational database behind the project: every Bayer Leverkusen league match, the teams, players and squads, and every timestamped match event.</p>
+<p class="pitch-caption">Pictured: the goal chain our database links. Andrich's pass <i>intended for</i> Wirtz <i>assists</i> Wirtz's goal (v Werder Bremen, 14 Apr 2024).</p></div>
+<figure class="pitch-figure"><img src="{{ url_for('static', filename='img/goal_chain.svg') }}" alt="Tactics-board drawing: Andrich's pass at 67:22 to Wirtz, who scores at 67:25"></figure></section>
 <div class="grid">{% for k, v in counts.items() %}<div class="stat"><b>{{ "{:,}".format(v) }}</b><span>{{ k }} rows</span></div>{% endfor %}</div>
 <div class="card" style="margin-top:20px"><h2 style="margin-top:0">What you can do</h2><div class="actions">
 <div class="action"><b>Retrieve</b><p>Search <a href="{{ url_for('events') }}">events</a> by match, player, type, outcome, or only the passes that assist a shot; browse <a href="{{ url_for('players') }}">players</a>.</p></div>

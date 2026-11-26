@@ -1,0 +1,12 @@
+{% extends "kg_base.html" %}{% block body %}
+<h1>{{ e['class'] }} event</h1><p class="sub">{{ e.kickOff[:10] }} · match {{ e.sbMatchId }} · {{ e.player }}{% if e.intendedFor %} → intended for {{ e.intendedFor }}{% endif %}{% if e.assistedShooter %} · assists {{ e.assistedShooter }}'s shot ({{ e.assistedOutcome }}){% endif %}<br><code>lev:event_{{ e.uuid }}</code></p>
+<form method="post" class="card"><div class="form-grid">
+<label>Period<input type="number" name="period" min="1" max="5" value="{{ e.period }}" required></label>
+<label>Minute<input type="number" name="minute" min="0" max="130" value="{{ e.minute }}" required></label>
+<label>Second<input type="number" name="second" min="0" max="59" value="{{ e.second }}" required></label>
+<label>Outcome<input name="outcome" value="{{ e.outcome or '' }}"></label></div>
+<p><button class="btn">Save changes</button> <a class="btn sec" href="{{ url_for('kg_events', match_id=e.sbMatchId) }}">Back to list</a></p>
+<p class="note">Saved as one SPARQL request: DELETE the old period / minute / second / outcome triples and INSERT the new ones (lev:Goal is kept in step with the outcome).</p></form>
+<form method="post" action="{{ url_for('kg_event_delete', uuid=e.uuid) }}" class="card danger-zone" onsubmit="return confirm('Delete this event?')">
+<b>Delete event</b><p class="note">Removes every triple of the event. Refused if an assisting pass still points at this shot (the store itself would accept it and leave a dangling link).</p><button class="btn danger">Delete event</button></form>
+{% endblock %}

@@ -1,0 +1,80 @@
+# =============================================================================
+# 01_insert.sparql -- INSERT demonstration (DML)
+# Inserts the goal chain used in the report into the graph:
+#   Leverkusen v Werder Bremen, 14 Apr 2024 (StatsBomb match 3895302)
+#   Andrich's pass at 67:22 names Wirtz and assists Wirtz's shot at 67:25 (Goal).
+# Run on an empty graph to see it build from scratch; run on the loaded graph
+# and nothing changes (an RDF graph is a SET of triples: re-inserting is a no-op).
+# Individual IRIs are built from the StatsBomb keys, exactly as the ETL does.
+# =============================================================================
+
+# name: insert_goal_chain | INSERT DATA: teams, players, match, squad, shot and assisting pass
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+INSERT DATA {
+  GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+    lev:team_904 a lev:Team ; lev:sbTeamId 904 ; lev:name "Bayer Leverkusen" .
+    lev:team_176 a lev:Team ; lev:sbTeamId 176 ; lev:name "Werder Bremen" .
+
+    lev:player_9195  a lev:Player ; lev:sbPlayerId 9195  ; lev:name "Robert Andrich" .
+    lev:player_40724 a lev:Player ; lev:sbPlayerId 40724 ; lev:name "Florian Wirtz" .
+
+    lev:match_3895302 a lev:Match ; lev:sbMatchId 3895302 ;
+        lev:kickOff "2024-04-14T17:30:00"^^xsd:dateTime ;
+        lev:homeTeam lev:team_904 ; lev:awayTeam lev:team_176 ;
+        lev:hasTeam  lev:team_904 , lev:team_176 .
+
+    lev:appearance_3895302_9195 a lev:Appearance ; lev:appearanceIn lev:match_3895302 ;
+        lev:appearanceFor lev:team_904 ; lev:appearanceOf lev:player_9195 .
+    lev:appearance_3895302_40724 a lev:Appearance ; lev:appearanceIn lev:match_3895302 ;
+        lev:appearanceFor lev:team_904 ; lev:appearanceOf lev:player_40724 .
+
+    lev:event_5085715b-09f6-403c-8b67-a546bcfed0ec a lev:Shot , lev:Goal ;
+        lev:sbEventUuid "5085715b-09f6-403c-8b67-a546bcfed0ec" ;
+        lev:inMatch lev:match_3895302 ; lev:performedBy lev:player_40724 ;
+        lev:period 2 ; lev:minute 67 ; lev:second 25 ; lev:outcome "Goal" .
+
+    lev:event_4c9d47f0-9ffb-4cb0-a6ef-e6c9b0581f11 a lev:Pass ;
+        lev:sbEventUuid "4c9d47f0-9ffb-4cb0-a6ef-e6c9b0581f11" ;
+        lev:inMatch lev:match_3895302 ; lev:performedBy lev:player_9195 ;
+        lev:period 2 ; lev:minute 67 ; lev:second 22 ; lev:outcome "Complete" ;
+        lev:intendedFor lev:player_40724 ;
+        lev:assists lev:event_5085715b-09f6-403c-8b67-a546bcfed0ec .
+  }
+}
+
+# name: insert_new_player_find_or_create | INSERT ... WHERE: add a player only if the key sbPlayerId is new
+# The SPARQL analogue of the relational find-or-create pattern (owl:hasKey is not
+# enforced by the store, so the guard lives in the statement / business layer).
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+INSERT {
+  GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+    lev:player_9000001 a lev:Player ; lev:sbPlayerId 9000001 ; lev:name "Demo Player" .
+    lev:appearance_3895302_9000001 a lev:Appearance ; lev:appearanceIn lev:match_3895302 ;
+        lev:appearanceFor lev:team_904 ; lev:appearanceOf lev:player_9000001 .
+  }
+}
+WHERE {
+  FILTER NOT EXISTS { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+      ?p lev:sbPlayerId 9000001 } }
+}
+
+# name: insert_event_for_new_player | INSERT DATA: an event performed by the new player
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+INSERT DATA {
+  GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+    lev:event_demo-0001 a lev:Pass ; lev:sbEventUuid "demo-0001" ;
+        lev:inMatch lev:match_3895302 ; lev:performedBy lev:player_9000001 ;
+        lev:period 1 ; lev:minute 10 ; lev:second 5 ; lev:outcome "Complete" ;
+        lev:intendedFor lev:player_40724 .
+  }
+}
+
+# name: check_inserted | SELECT the inserted chain back
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+SELECT ?passer ?intendedFor ?shooter ?outcome
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  lev:event_4c9d47f0-9ffb-4cb0-a6ef-e6c9b0581f11 lev:performedBy/lev:name ?passer ;
+      lev:intendedFor/lev:name ?intendedFor ;
+      lev:assists ?shot .
+  ?shot lev:performedBy/lev:name ?shooter ; lev:outcome ?outcome } }

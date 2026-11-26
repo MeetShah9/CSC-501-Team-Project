@@ -1,0 +1,6 @@
+{% extends "kg_base.html" %}{% block body %}
+<h1>Integrity checks</h1><p class="sub">Under the Open World Assumption the store does not enforce the ontology's cardinalities, keys or ranges. These ASK queries (<code>04_integrity_checks.sparql</code>) check them on our own data; each should answer <b>false</b>.</p>
+<div class="table-wrap"><table><tr><th>Check</th><th>Result</th></tr>
+{% for b in blocks %}<tr><td>{{ b.title }}</td><td>{% if b.name in failed %}<span class="tag bad">VIOLATED</span>{% else %}<span class="tag good">ok</span>{% endif %}</td></tr>{% endfor %}</table></div>
+<p class="note">{{ 'All constraints hold.' if not failed else failed|length ~ ' violation(s).' }}</p>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "kg_base.html" %}{% block body %}
+<h1>Demonstration SPARQL queries</h1><p class="sub">Defined in <code>src/dal/models/semantic/02_select_queries.sparql</code> and executed live (first 10 rows).</p>
+{% for q in queries %}<div class="card"><h2 style="margin-top:0">{{ q.title }}</h2><pre>{{ q.sparql }}</pre>
+{% if q.kind == 'table' %}<table><tr>{% for c in q.cols %}<th>{{ c }}</th>{% endfor %}</tr>{% for r in q.rows %}<tr>{% for v in r %}<td>{{ v }}</td>{% endfor %}</tr>{% endfor %}</table><p class="note">{{ q.n }} row(s) in total.</p>
+{% elif q.kind == 'bool' %}<p><b>Answer: {{ 'true' if q.value else 'false' }}</b></p>
+{% else %}<table><tr><th>subject</th><th>predicate</th><th>object</th></tr>{% for t in q.triples %}<tr>{% for v in t %}<td>{{ v }}</td>{% endfor %}</tr>{% endfor %}</table><p class="note">{{ q.n }} triple(s) in the result graph.</p>{% endif %}
+</div>{% endfor %}
+{% endblock %}

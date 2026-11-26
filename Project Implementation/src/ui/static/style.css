@@ -128,6 +128,9 @@ footer {
 /* ---------- dashboard: pitch banner + scoreboard stats -------------------------- */
 .pitch {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 28px;
   overflow: hidden;
   color: #fff;
   border-radius: var(--radius);
@@ -138,17 +141,14 @@ footer {
               var(--pitch) 0 60px, var(--pitch-light) 60px 120px);
   box-shadow: var(--shadow);
 }
-/* halfway line and centre circle, drawn very faintly */
-.pitch::before,
-.pitch::after { content: ""; position: absolute; pointer-events: none; }
-.pitch::before { top: 0; bottom: 0; right: 22%; border-left: 2px solid rgba(255, 255, 255, .22); }
-.pitch::after {
-  width: 130px; height: 130px; border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, .22);
-  right: calc(22% - 65px); top: 50%; transform: translateY(-50%);
-}
 .pitch h1 { font-size: 26px; margin: 0 0 6px; position: relative; }
 .pitch p { margin: 0; max-width: 640px; color: rgba(255, 255, 255, .88); position: relative; }
+.pitch-text { flex: 1; min-width: 0; }
+.pitch .pitch-caption { margin-top: 12px; font-size: 13px; color: rgba(255, 255, 255, .75); }
+.pitch-caption i { font-style: normal; color: #fff; font-weight: 600; }
+.pitch-figure { margin: 0; flex: 0 0 380px; }
+.pitch-figure img { display: block; width: 100%; height: auto; }
+
 .pitch .season {
   display: inline-block; position: relative;
   background: var(--red); color: #fff;
@@ -313,6 +313,7 @@ pre {
 @media (max-width: 720px) {
   header { gap: 0; padding: 0 12px; }
   nav a { padding: 10px 8px; }
-  .pitch::before, .pitch::after { display: none; }
+  .pitch { flex-direction: column; align-items: stretch; }
+  .pitch-figure { flex-basis: auto; }
   main { padding: 0 12px; }
 }

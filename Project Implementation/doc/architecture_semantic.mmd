@@ -1,0 +1,34 @@
+flowchart LR
+  subgraph SRC["Source data (StatsBomb Open Data)"]
+    J["matches · lineups · events<br/>JSON (data/raw)"]:::d
+  end
+  subgraph BIZ["Business layer  src/biz"]
+    ONT["kg_ontology.py<br/>ER → RDFS/OWL (TBox)"]
+    ETL["kg_etl.py<br/>JSON → individuals (ABox)"]
+    SV["kg_services.py<br/>validation + integrity rules<br/>(OWA: store enforces none)"]
+    DM["kg_demo.py · kg_reasoner.py<br/>SPARQL demos · HermiT check"]
+  end
+  subgraph DAL["Data layer  src/dal"]
+    FILES["models/semantic<br/>leverkusen.owl · leverkusen_kg.rdf<br/>00–04 *.sparql"]:::d
+    RP["kg_repositories.py<br/>escaped SPARQL"]
+    QS["kg_queries.py<br/>named blocks"]
+    DRV["kg_store.py driver<br/>select · ask · triples · update<br/>batched INSERT DATA loader"]
+  end
+  subgraph STORE["Triple store"]
+    VOS[("Virtuoso 7<br/>SPARQL endpoint :8890<br/>named graph …/leverkusen/")]
+    LOC[("embedded rdflib<br/>KG_BACKEND=local")]
+  end
+  subgraph UI["User-interface layer  src/ui"]
+    APP["kg_app.py (Flask)<br/>search · add · edit · delete<br/>queries · checks"]
+  end
+  USER(["End user<br/>(browser)"])
+  J --> ETL
+  ONT -- "RDF/XML" --> FILES
+  ETL -- "RDF/XML" --> FILES
+  FILES -- "kg-load / Quad Store Upload" --> DRV
+  USER -- "HTTP forms" --> APP --> SV --> RP --> DRV
+  APP -- "live queries" --> QS --> DRV
+  DM --> QS
+  DRV -- "SPARQL 1.1 protocol (HTTP POST)" --> VOS
+  DRV -. "in process" .-> LOC
+  classDef d fill:#eef0f3,stroke:#8a94a0

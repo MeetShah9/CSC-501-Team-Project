@@ -1,0 +1,11 @@
+{% extends "kg_base.html" %}{% import "kg_macros.html" as k %}{% block body %}
+<h1>Add player and his events</h1><p class="sub">Step 1: choose the match. Step 2: the player (found by name, or created with a new key) joins that team's squad, and up to three events he performed are added. Everything is validated before any triple is written.</p>
+<div class="card"><form method="get" class="filters"><label>Match<select name="match_id" onchange="this.form.submit()"><option value="">Choose…</option>
+{% for m in matches %}<option value="{{ m.sbMatchId }}" {{ 'selected' if match_id == m.sbMatchId }}>{{ k.match_label(m) }}</option>{% endfor %}</select></label><button class="btn sec">Load teams</button></form></div>
+{% if match_id %}<form method="post" class="card"><input type="hidden" name="match_id" value="{{ match_id }}">
+<h2 style="margin-top:0">Player</h2><div class="form-grid">
+<label>Name<input name="name" value="{{ form.get('name', '') }}" required placeholder="e.g. Demo Player"></label>
+<label>Appears for<select name="team_id" required>{% for t in teams %}<option value="{{ t.sbTeamId }}" {{ 'selected' if form.get('team_id') == t.sbTeamId|string }}>{{ t.name }} ({{ t.side }})</option>{% endfor %}</select></label></div>
+{% for i in [1, 2, 3] %}<h2>Event {{ i }}{% if i > 1 %} <small class="note">(optional)</small>{% endif %}</h2><div class="form-grid">{% with p = 'e' ~ i ~ '_', optional = True %}{% include "kg_event_row.html" %}{% endwith %}</div>{% endfor %}
+<p><button class="btn">Save player and events</button></p></form>{% endif %}
+{% endblock %}

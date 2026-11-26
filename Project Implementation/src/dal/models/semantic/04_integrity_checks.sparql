@@ -1,0 +1,101 @@
+# =============================================================================
+# 04_integrity_checks.sparql -- constraint validation as ASK queries
+# OWL follows the Open World Assumption: a missing triple is "unknown", not an
+# error, and the triple store does not reject data that breaks the ontology's
+# cardinalities, keys or ranges. So the constraints the relational schema
+# enforced (PK, UNIQUE, FK, CHECK, triggers) are checked here explicitly
+# (closed-world validation of our own data). Every ASK should answer FALSE;
+# TRUE means a violation. `python main.py kg-check` runs them all.
+# =============================================================================
+
+# name: event_player_not_one | Each event has exactly one performedBy (cardinality 1, was NOT NULL + FK)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  { ?e a ?c . ?c rdfs:subClassOf lev:MatchEvent . FILTER NOT EXISTS { ?e lev:performedBy ?p } }
+  UNION
+  { ?e lev:performedBy ?p1 , ?p2 . FILTER(?p1 != ?p2) } } }
+
+# name: event_match_not_one | Each event is in exactly one match
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  { ?e a ?c . ?c rdfs:subClassOf lev:MatchEvent . FILTER NOT EXISTS { ?e lev:inMatch ?m } }
+  UNION
+  { ?e lev:inMatch ?m1 , ?m2 . FILTER(?m1 != ?m2) } } }
+
+# name: match_not_two_teams | Each match has exactly one home and one away team, and they differ
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  { ?m a lev:Match . FILTER NOT EXISTS { ?m lev:homeTeam ?h } }
+  UNION { ?m a lev:Match . FILTER NOT EXISTS { ?m lev:awayTeam ?a } }
+  UNION { ?m lev:homeTeam ?h1 , ?h2 . FILTER(?h1 != ?h2) }
+  UNION { ?m lev:awayTeam ?a1 , ?a2 . FILTER(?a1 != ?a2) }
+  UNION { ?m lev:homeTeam ?t ; lev:awayTeam ?t } } }
+
+# name: duplicate_keys | owl:hasKey: no two individuals share a source key (was UK_Sb*)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  VALUES ?key { lev:sbTeamId lev:sbPlayerId lev:sbMatchId lev:sbEventUuid }
+  ?x ?key ?v . ?y ?key ?v . FILTER(?x != ?y) } }
+
+# name: duplicate_team_name | Team names are unique (was UK_Name)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?x a lev:Team ; lev:name ?n . ?y a lev:Team ; lev:name ?n . FILTER(?x != ?y) } }
+
+# name: duplicate_appearance | One appearance per (match, player) (owl:hasKey, was UK_AppearsFor_MatchId_PlayerId)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?a lev:appearanceIn ?m ; lev:appearanceOf ?p .
+  ?b lev:appearanceIn ?m ; lev:appearanceOf ?p . FILTER(?a != ?b) } }
+
+# name: appearance_team_not_in_match | The team of an appearance plays in that match (was the composite FK)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?a lev:appearanceIn ?m ; lev:appearanceFor ?t .
+  FILTER NOT EXISTS { ?m lev:hasTeam ?t } } }
+
+# name: performer_not_in_squad | The performer of an event appeared in that match
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?e lev:performedBy ?p ; lev:inMatch ?m .
+  FILTER NOT EXISTS { ?a lev:appearanceOf ?p ; lev:appearanceIn ?m } } }
+
+# name: time_out_of_range | period in 1..5, minute >= 0, second in 0..59 (was CHECK constraints)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  { ?e lev:period ?v . FILTER(?v < 1 || ?v > 5) }
+  UNION { ?e lev:minute ?v . FILTER(?v < 0) }
+  UNION { ?e lev:second ?v . FILTER(?v < 0 || ?v > 59) } } }
+
+# name: pass_links_on_non_pass | Only a Pass has intendedFor / assists (rdfs:domain lev:Pass, was CK_MatchEvent_PassLinks)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  { ?e lev:intendedFor ?x } UNION { ?e lev:assists ?x }
+  FILTER NOT EXISTS { ?e a lev:Pass } } }
+
+# name: assist_not_shot_same_match | An assisted event is a Shot of the same match (was the trigger)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?pass lev:assists ?shot ; lev:inMatch ?m .
+  FILTER NOT EXISTS { ?shot a lev:Shot ; lev:inMatch ?m } } }
+
+# name: shot_assisted_twice | A shot is assisted by at most one pass (owl:InverseFunctionalProperty, was UK)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?p1 lev:assists ?s . ?p2 lev:assists ?s . FILTER(?p1 != ?p2) } }
+
+# name: goal_type_consistent | lev:Goal == Shot with outcome "Goal" (materialised inference is in sync)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  { ?s a lev:Shot ; lev:outcome "Goal" . FILTER NOT EXISTS { ?s a lev:Goal } }
+  UNION { ?s a lev:Goal . FILTER NOT EXISTS { ?s a lev:Shot ; lev:outcome "Goal" } } } }
+
+# name: dangling_reference | Every object of performedBy / intendedFor / assists / inMatch is a typed individual (was FK)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  { ?e lev:performedBy ?x . FILTER NOT EXISTS { ?x a lev:Player } }
+  UNION { ?e lev:intendedFor ?x . FILTER NOT EXISTS { ?x a lev:Player } }
+  UNION { ?e lev:assists ?x . FILTER NOT EXISTS { ?x a lev:Shot } }
+  UNION { ?e lev:inMatch ?x . FILTER NOT EXISTS { ?x a lev:Match } } } }

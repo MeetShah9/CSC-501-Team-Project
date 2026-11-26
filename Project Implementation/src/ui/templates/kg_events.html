@@ -1,0 +1,22 @@
+{% extends "kg_base.html" %}{% import "_macros.html" as ui %}{% import "kg_macros.html" as k %}{% block body %}
+<h1>Event search</h1><p class="sub">{{ "{:,}".format(total) }} matching events.</p>
+<div class="card"><form class="filters" method="get">
+<label>Kick-off from<input type="date" name="date_from" value="{{ f.date_from }}"></label>
+<label>Kick-off to<input type="date" name="date_to" value="{{ f.date_to }}"></label>
+<label>Minute from<input type="number" name="minute_from" min="0" max="130" value="{{ f.minute_from }}" style="width:90px"></label>
+<label>Minute to<input type="number" name="minute_to" min="0" max="130" value="{{ f.minute_to }}" style="width:90px"></label>
+<label>Match<select name="match_id"><option value="">All matches</option>{% for m in matches %}<option value="{{ m.sbMatchId }}" {{ 'selected' if f.match_id == m.sbMatchId|string }}>{{ k.match_label(m) }}</option>{% endfor %}</select></label>
+<label>Player contains<input name="player" value="{{ f.player }}" placeholder="e.g. Wirtz"></label>
+<label>Type (class)<select name="event_class"><option value="">Any</option>{% for c in classes %}<option {{ 'selected' if f.event_class == c }}>{{ c }}</option>{% endfor %}<option value="Goal" {{ 'selected' if f.event_class == 'Goal' }}>Goal (Shot ⊓ outcome Goal)</option></select></label>
+<label>Outcome<input name="outcome" value="{{ f.outcome }}" placeholder="e.g. Goal"></label>
+<label class="check"><input type="checkbox" name="assists_only" value="1" {{ 'checked' if f.assists_only }}> Assisting passes only</label>
+<button class="btn">Search</button><a class="btn sec" href="{{ url_for('kg_events') }}">Reset</a></form></div>
+<div class="table-wrap"><table><tr><th>Kick-off</th><th>Time</th><th>Player</th><th>Class</th><th>Outcome</th><th>Intended for</th><th>Assists shot by</th><th></th></tr>
+{% for e in rows %}<tr><td class="nowrap">{{ e.kickOff[:16]|replace('T', ' ') }}</td><td>{{ k.clock(e) }}</td><td>{{ e.player }}</td><td>{{ e['class'] }}</td>
+<td>{{ ui.outcome(e.outcome) }}</td><td>{{ e.intendedFor or '' }}</td>
+<td>{% if e.assistedShooter %}{{ e.assistedShooter }} {{ ui.outcome(e.assistedOutcome) }}{% endif %}</td>
+<td class="row-actions"><a href="{{ url_for('kg_event_edit', uuid=e.uuid) }}">edit / delete</a></td></tr>
+{% else %}<tr><td colspan="8">No events match these filters.</td></tr>{% endfor %}</table></div>
+<div class="pager">{% if page > 1 %}<a href="{{ url_for('kg_events', page=page-1, **args) }}">← Prev</a>{% endif %}
+<span>Page {{ page }} of {{ pages }}</span>{% if page < pages %}<a href="{{ url_for('kg_events', page=page+1, **args) }}">Next →</a>{% endif %}</div>
+{% endblock %}
