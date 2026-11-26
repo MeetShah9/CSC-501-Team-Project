@@ -4,7 +4,7 @@ param([switch]$Full, [switch]$NoUi)
 $ErrorActionPreference = "Stop"
 Set-Location (Join-Path $PSScriptRoot "..")
 $endpoint = if ($env:VIRTUOSO_ENDPOINT) { $env:VIRTUOSO_ENDPOINT } else { "http://localhost:8890/sparql" }
-$fullArg = if ($Full) { "--full" } else { "" }
+$fullArg = @(if ($Full) { "--full" })
 
 Write-Host "== 1/4 Python environment"
 if (-not (Test-Path .venv)) { python -m venv .venv }
