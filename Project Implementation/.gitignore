@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+data/preprocessed/*.db
+
+# generated knowledge graph with all 137k events (~120 MB)
+data/preprocessed/*.rdf
+
+.DS_Store
+.env
