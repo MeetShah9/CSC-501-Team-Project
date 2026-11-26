@@ -69,9 +69,11 @@ The match ID connects the match record to its event and lineup files. The event 
 
 ## Course roadmap
 
-This semester-long team project follows the course milestones. **We are at Milestone 1 now.**
+This semester-long team project follows the course milestones.
 
-1. **Project Definition & Team Formation** — define the problem, motivation, scope, and proposal. *(Current)*
+**Milestones 4 and 5 code:** see [Project Implementation](<Project Implementation/>).
+
+1. **Project Definition & Team Formation** — define the problem, motivation, scope, and proposal.
 2. **Background & Related Work** — review existing data representations and research.
 3. **Project Presentation: 3-Minute Talk** — explain the problem and project plan.
 4. **Solution Design & Implementation** — develop the domain model, ERD, relational schema and SQL representation, then the RDF/RDFS/OWL representation, triple store, and SPARQL queries.
