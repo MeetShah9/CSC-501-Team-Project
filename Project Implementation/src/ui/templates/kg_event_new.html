@@ -1,0 +1,10 @@
+{% extends "kg_base.html" %}{% import "kg_macros.html" as k %}{% block body %}
+<h1>Add event</h1><p class="sub">Step 1: choose the match. Step 2: fill in the event. The player must be in that match's squad.</p>
+<div class="card"><form method="get" class="filters"><label>Match<select name="match_id" onchange="this.form.submit()"><option value="">Choose…</option>
+{% for m in matches %}<option value="{{ m.sbMatchId }}" {{ 'selected' if match_id == m.sbMatchId }}>{{ k.match_label(m) }}</option>{% endfor %}</select></label><button class="btn sec">Load squad</button></form></div>
+{% if match_id %}<form method="post" class="card"><input type="hidden" name="match_id" value="{{ match_id }}"><div class="form-grid">
+<label>Player (performed by)<select name="player_id" required><option value="">Choose…</option>{% for s in squad %}<option value="{{ s.sbPlayerId }}" {{ 'selected' if form.get('player_id') == s.sbPlayerId|string }}>{{ s.name }} — {{ s.team }}</option>{% endfor %}</select></label>
+{% with p = '', optional = False %}{% include "kg_event_row.html" %}{% endwith %}
+<label>Assists shot (Pass only)<select name="assists"><option value="">—</option>{% for s in shots %}<option value="{{ s.uuid }}">{{ s.player }} · P{{ s.period }} {{ s.minute }}:{{ '%02d'|format(s.second) }} · {{ s.outcome }}</option>{% endfor %}</select></label>
+</div><p><button class="btn">Add event</button></p></form>{% endif %}
+{% endblock %}

@@ -1,0 +1,151 @@
+# =============================================================================
+# 02_select_queries.sparql -- retrieval (SELECT, ASK, CONSTRUCT, DESCRIBE)
+# The first nine and events_per_class mirror the nine SQL queries in relational/sql/03_select_queries.sql,
+# so the two representations can be compared answer by answer.
+# Each block starts with "# name: <id> | <title>" and runs on its own; the web UI
+# ("SPARQL queries" page) and `python main.py kg-demo` run them all.
+# Scope: the committed sample graph holds every team, player, match, appearance and
+# shot, every pass that assists a shot, and all events of match 3895302.
+# =============================================================================
+
+# name: assist_chain_example | Report example: Andrich's pass at 67:22 -> Wirtz's shot (match 3895302)
+# One graph path replaces the relational self-join: Pass --assists--> Shot.
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+SELECT ?passer ?intendedFor ?passTime ?shooter ?shotTime ?shotOutcome
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?pass a lev:Pass ; lev:inMatch lev:match_3895302 ; lev:assists ?shot ;
+        lev:performedBy/lev:name ?passer ; lev:minute ?pm ; lev:second ?ps .
+  OPTIONAL { ?pass lev:intendedFor/lev:name ?intendedFor }
+  ?shot lev:performedBy/lev:name ?shooter ; lev:minute ?sm ; lev:second ?ss ; lev:outcome ?shotOutcome .
+  FILTER(CONTAINS(?passer, "Andrich") && ?pm = 67)
+  BIND(CONCAT(STR(?pm), ":", IF(?ps < 10, "0", ""), STR(?ps)) AS ?passTime)
+  BIND(CONCAT(STR(?sm), ":", IF(?ss < 10, "0", ""), STR(?ss)) AS ?shotTime) } }
+
+# name: top_scorers | Leverkusen top scorers (class lev:Goal + ternary Appearance)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+SELECT ?player (COUNT(?goal) AS ?goals)
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?goal a lev:Goal ; lev:performedBy ?p ; lev:inMatch ?m .
+  ?app lev:appearanceOf ?p ; lev:appearanceIn ?m ; lev:appearanceFor/lev:name "Bayer Leverkusen" .
+  ?p lev:name ?player } }
+GROUP BY ?p ?player
+ORDER BY DESC(?goals) ?player
+LIMIT 10
+
+# name: top_assisters | Players with most goal assists
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+SELECT ?player (COUNT(?pass) AS ?goalAssists)
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?pass lev:assists ?shot ; lev:performedBy ?p .
+  ?shot a lev:Goal .
+  ?p lev:name ?player } }
+GROUP BY ?p ?player
+ORDER BY DESC(?goalAssists) ?player
+LIMIT 10
+
+# name: duos | Most productive pass-to-goal pairs (assister -> scorer), HAVING >= 2
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+SELECT ?assister ?scorer (COUNT(?shot) AS ?goals)
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?pass lev:assists ?shot ; lev:performedBy/lev:name ?assister .
+  ?shot a lev:Goal ; lev:performedBy/lev:name ?scorer } }
+GROUP BY ?assister ?scorer
+HAVING (COUNT(?shot) >= 2)
+ORDER BY DESC(?goals) ?assister ?scorer
+LIMIT 10
+
+# name: intended_targets | Players most often named as the *intended* target of an incomplete pass
+# "intended for" is not a completed receipt: these passes named a target but did not reach him.
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+SELECT ?intendedFor (COUNT(?pass) AS ?incompletePasses) (COUNT(DISTINCT ?passer) AS ?differentPassers)
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?pass a lev:Pass ; lev:outcome "Incomplete" ; lev:intendedFor ?t ; lev:performedBy ?passer .
+  ?t lev:name ?intendedFor } }
+GROUP BY ?t ?intendedFor
+ORDER BY DESC(?incompletePasses)
+LIMIT 10
+
+# name: goals_per_match | Leverkusen goals per match with opponent and venue (OPTIONAL = LEFT JOIN)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+SELECT ?kickOff ?opponent ?venue (COUNT(?goal) AS ?leverkusenGoals)
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?own lev:name "Bayer Leverkusen" .
+  ?m a lev:Match ; lev:kickOff ?kickOff ; lev:hasTeam ?opp .
+  FILTER(?opp != ?own)
+  ?opp lev:name ?opponent .
+  { ?m lev:homeTeam ?own . BIND("Home" AS ?venue) } UNION { ?m lev:awayTeam ?own . BIND("Away" AS ?venue) }
+  OPTIONAL { ?goal a lev:Goal ; lev:inMatch ?m ; lev:performedBy ?p .
+             ?app lev:appearanceOf ?p ; lev:appearanceIn ?m ; lev:appearanceFor ?own } } }
+GROUP BY ?kickOff ?opponent ?venue
+ORDER BY ?kickOff
+
+# name: late_goals | Leverkusen players who scored in the 85th minute or later
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+SELECT ?player ?kickOff ?minute
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?goal a lev:Goal ; lev:minute ?minute ; lev:inMatch ?m ; lev:performedBy ?p .
+  FILTER(?minute >= 85)
+  ?m lev:kickOff ?kickOff .
+  ?p lev:name ?player .
+  FILTER EXISTS { ?a lev:appearanceOf ?p ; lev:appearanceFor/lev:name "Bayer Leverkusen" } } }
+ORDER BY ?kickOff ?minute
+
+# name: scorers_without_assists | Scorers who never set up a goal (FILTER NOT EXISTS)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+SELECT ?player (COUNT(?goal) AS ?goals)
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?goal a lev:Goal ; lev:performedBy ?p .
+  ?p lev:name ?player .
+  FILTER NOT EXISTS { ?pass lev:performedBy ?p ; lev:assists ?g2 . ?g2 a lev:Goal } } }
+GROUP BY ?p ?player
+ORDER BY DESC(?goals) ?player
+LIMIT 10
+
+# name: never_shot | Leverkusen squad players who never took a shot (FILTER NOT EXISTS)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+SELECT ?player (COUNT(?app) AS ?appearances)
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?app lev:appearanceOf ?p ; lev:appearanceFor/lev:name "Bayer Leverkusen" .
+  ?p lev:name ?player .
+  FILTER NOT EXISTS { ?s a lev:Shot ; lev:performedBy ?p } } }
+GROUP BY ?p ?player
+ORDER BY DESC(?appearances) ?player
+
+# name: events_by_datetime | Search by datetime: goals in April 2024 between minute 60 and 75
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?kickOff ?minute ?second ?scorer
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?m lev:kickOff ?kickOff .
+  FILTER(?kickOff >= "2024-04-01T00:00:00"^^xsd:dateTime && ?kickOff < "2024-05-01T00:00:00"^^xsd:dateTime)
+  ?e a lev:Goal ; lev:inMatch ?m ; lev:minute ?minute ; lev:second ?second ; lev:performedBy/lev:name ?scorer .
+  FILTER(?minute >= 60 && ?minute <= 75) } }
+ORDER BY ?kickOff ?minute ?second
+
+# name: events_per_class | Events per class, walking the IS-A hierarchy (schema + data in one query)
+# rdfs:subClassOf* reads the TBox: the query does not hard-code the list of event types.
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?class ?label (COUNT(?e) AS ?events)
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?class rdfs:subClassOf* lev:MatchEvent ; rdfs:label ?label .
+  ?e a ?class } }
+GROUP BY ?class ?label
+ORDER BY DESC(?events)
+
+# name: ask_wirtz_scored_v_bremen | ASK: did Florian Wirtz score against Werder Bremen?
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+ASK { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?g a lev:Goal ; lev:performedBy/lev:name "Florian Wirtz" ; lev:inMatch ?m .
+  ?m lev:hasTeam/lev:name "Werder Bremen" } }
+
+# name: construct_set_up | CONSTRUCT: a new graph of "setUpGoalFor" links between players
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+CONSTRUCT { ?passer lev:setUpGoalFor ?scorer }
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?pass lev:assists ?shot ; lev:performedBy ?passer .
+  ?shot a lev:Goal ; lev:performedBy ?scorer } }
+
+# name: describe_wirtz | DESCRIBE: everything the store holds about Florian Wirtz
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+DESCRIBE lev:player_40724

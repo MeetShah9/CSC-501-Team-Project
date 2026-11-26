@@ -1,0 +1,7 @@
+{# one event row of a data-entry form; p = field-name prefix #}
+<label>Event type (class)<select name="{{ p }}event_class"><option value="">{{ '—' if optional else 'Choose…' }}</option>{% for c in classes %}<option {{ 'selected' if form.get(p ~ 'event_class') == c }}>{{ c }}</option>{% endfor %}</select></label>
+<label>Period (1–5)<input type="number" name="{{ p }}period" min="1" max="5" value="{{ form.get(p ~ 'period', 1) }}"></label>
+<label>Minute<input type="number" name="{{ p }}minute" min="0" max="130" value="{{ form.get(p ~ 'minute', 0) }}"></label>
+<label>Second<input type="number" name="{{ p }}second" min="0" max="59" value="{{ form.get(p ~ 'second', 0) }}"></label>
+<label>Outcome (optional)<input name="{{ p }}outcome" value="{{ form.get(p ~ 'outcome', '') }}" placeholder="Complete, Goal, Saved…"></label>
+<label>Intended for (Pass only)<select name="{{ p }}intended_for"><option value="">—</option>{% for s in squad %}<option value="{{ s.sbPlayerId }}" {{ 'selected' if form.get(p ~ 'intended_for') == s.sbPlayerId|string }}>{{ s.name }}</option>{% endfor %}</select></label>

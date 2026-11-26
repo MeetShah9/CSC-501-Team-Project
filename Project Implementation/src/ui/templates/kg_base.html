@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Beyond the Scoresheet · Knowledge graph{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head><body>
+<header><div class="brand"><i class="ball" aria-hidden="true"></i>Beyond the <span>Scoresheet</span> <small>· Knowledge graph</small></div>
+<nav>{% for ep, label in [('kg_index','Dashboard'),('kg_events','Events'),('kg_player_new','Add player + events'),('kg_event_new','Add event'),('kg_players','Players'),('kg_queries_page','SPARQL queries'),('kg_checks','Integrity checks')] %}<a href="{{ url_for(ep) }}" class="{{ 'active' if request.endpoint == ep }}">{{ label }}</a>{% endfor %}</nav></header>
+<main>{% with msgs = get_flashed_messages(with_categories=true) %}{% for cat, m in msgs %}<div class="flash {{ cat }}">{{ m }}</div>{% endfor %}{% endwith %}
+{% block body %}{% endblock %}</main>
+<footer>CSC 501 team project · Data: StatsBomb Open Data (Bundesliga 2023/24) · RDF/OWL + SPARQL · store: {{ store_name }}</footer></body></html>

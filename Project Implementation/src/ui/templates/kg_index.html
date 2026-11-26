@@ -1,0 +1,12 @@
+{% extends "kg_base.html" %}{% block body %}
+<section class="pitch"><div class="pitch-text"><span class="season">Bundesliga · 2023/24</span><h1>Knowledge graph</h1><p>The same season as an RDF graph: an OWL ontology (classes, properties, restrictions, keys) plus individuals for every team, player, match and squad, and the match events, queried and changed with SPARQL.</p>
+<p class="pitch-caption">Pictured: Andrich's pass <i>lev:intendedFor</i> Wirtz <i>lev:assists</i> Wirtz's shot, a <i>lev:Goal</i> (v Werder Bremen, 14 Apr 2024).</p></div>
+<figure class="pitch-figure"><img src="{{ url_for('static', filename='img/goal_chain.svg') }}" alt="Tactics-board drawing of the goal chain"></figure></section>
+<div class="grid">{% for k, v in counts.items() %}<div class="stat"><b>{{ "{:,}".format(v) }}</b><span>{{ k if k == 'triples' else k ~ ' individuals' }}</span></div>{% endfor %}</div>
+<div class="card" style="margin-top:20px"><h2 style="margin-top:0">What you can do</h2><div class="actions">
+<div class="action"><b>Retrieve</b><p>Search <a href="{{ url_for('kg_events') }}">events</a> by kick-off date range and match minute, player, type or outcome; find <a href="{{ url_for('kg_players') }}">players by name</a>.</p></div>
+<div class="action"><b>Insert</b><p><a href="{{ url_for('kg_player_new') }}">Add a player and the events he performed</a>, or <a href="{{ url_for('kg_event_new') }}">add one event</a>.</p></div>
+<div class="action"><b>Update / delete</b><p>Open an event or player from the lists. Deletes that would leave dangling links are refused by the application.</p></div>
+<div class="action"><b>Query and validate</b><p>Run the report's <a href="{{ url_for('kg_queries_page') }}">SPARQL queries</a> and the <a href="{{ url_for('kg_checks') }}">integrity checks</a> live.</p></div>
+</div></div>
+{% endblock %}

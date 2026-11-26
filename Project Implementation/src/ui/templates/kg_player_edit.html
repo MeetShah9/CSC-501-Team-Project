@@ -1,0 +1,6 @@
+{% extends "kg_base.html" %}{% block body %}
+<h1>{{ p.name }}</h1><p class="sub"><code>lev:player_{{ p.sbPlayerId }}</code> · referenced by {{ refs }} event(s)</p>
+<form method="post" class="card"><label>Name<input name="name" value="{{ p.name }}" required></label><p><button class="btn">Save name</button> <a class="btn sec" href="{{ url_for('kg_players') }}">Back</a></p></form>
+<form method="post" action="{{ url_for('kg_player_delete', sb_player=p.sbPlayerId) }}" class="card danger-zone" onsubmit="return confirm('Delete this player?')">
+<b>Delete player</b><p class="note">Removes the player and his appearances in one request. Refused while any event names him as performer or intended target.</p><button class="btn danger">Delete player</button></form>
+{% endblock %}

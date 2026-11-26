@@ -1,0 +1,4 @@
+{% extends "kg_base.html" %}{% block body %}
+<h1>Triple store not reachable</h1><div class="flash error">{{ message }}</div>
+<div class="card"><p>Start Virtuoso (see README, "Semantic Web"), load the graph with <code>python main.py kg-load</code>, then reload this page. Or run the app with the embedded store: <code>KG_BACKEND=local python main.py kg-ui</code>.</p></div>
+{% endblock %}

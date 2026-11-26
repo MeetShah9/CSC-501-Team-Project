@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+>
+  <rdf:Description rdf:nodeID="N430b2e8c03f14ba4b896c4bbc2411de9">
+    <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</xsd:minInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Pass">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Pass</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Pass'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+    <rdfs:subClassOf rdf:nodeID="Ne2a8b7dc3e9e416fb97be063ba0ee9a6"/>
+    <rdfs:subClassOf rdf:nodeID="Nd408a618fd7f44879ff62c27c69609f3"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1a69afa2f0b6469c907c22a83c211fdd">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#performedBy"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    <owl:onClass rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Player"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#hasTeam">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">has team</rdfs:label>
+    <rdfs:comment xml:lang="en">Relationship 'plays in' seen from the match (Team M:N Match).</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Match"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Team"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#assists">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AsymmetricProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+    <rdfs:label xml:lang="en">assists</rdfs:label>
+    <rdfs:comment xml:lang="en">Relationship 'assists' (pass 0..1 : shot 0..1). Functional and inverse functional: a pass assists at most one shot and a shot is assisted by at most one pass.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Pass"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Shot"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N5223cd29707746b49c29825803a200e6">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <owl:withRestrictions rdf:nodeID="N08c3c84498db4875a279df6abac045fc"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N970e51cab6d64b7cb6bec288dd80e6e7">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Team"/>
+    <rdf:rest rdf:nodeID="N6f5d2c6f18a24aef8a9e6c4e7d7a121a"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N716d6639e54a46669dd0a044b3835729">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#second"/>
+    <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#minute">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">minute</rdfs:label>
+    <rdfs:comment xml:lang="en">Part of 'match time': minute on the match clock (CK_MatchEvent_Minute).</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#period">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">period</rdfs:label>
+    <rdfs:comment xml:lang="en">Part of the composite attribute 'match time': 1-2 halves, 3-4 extra time, 5 penalties (CK_MatchEvent_Period).</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+    <rdfs:range rdf:nodeID="N3317c7fc357f4b09befb934480f63ce5"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Duel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Duel</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Duel'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N5f700723c0df4fcd9ea23ef3040dfb42">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#sbTeamId"/>
+    <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nb6093c6b50614406aeb74583327d4bdb">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#appearanceOf"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N4f9cefc8976d4567a4cb22d658deae1c">
+    <rdf:first rdf:nodeID="N430b2e8c03f14ba4b896c4bbc2411de9"/>
+    <rdf:rest rdf:nodeID="N45dd07d7abb249e8acb380b684d633c4"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N9c0deaf3fde74861b5320fc0f7326c7f">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Dispossessed"/>
+    <rdf:rest rdf:nodeID="Ne85318223b4b4b08bb9acdc5663dd371"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N288c4823ba3d4fa1aa414683d9fd7c5c">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Pass"/>
+    <rdf:rest rdf:nodeID="N5655188285924027aed25e32041cbdeb"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N3989298ed4ab486a94bc22395390310d">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#FoulWon"/>
+    <rdf:rest rdf:nodeID="N5a5e5fa53e0b43249e018c1d22a62018"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N17f219b111b24695ab78abe6ae912961">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#PlayerOn"/>
+    <rdf:rest rdf:nodeID="N409baeacedf9409b9a33b4fc7532eb64"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Player">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Player</rdfs:label>
+    <rdfs:comment xml:lang="en">A football player (entity set Player).</rdfs:comment>
+    <rdfs:subClassOf rdf:nodeID="Ne3104383b1914c7caaf9ae03b77e92e2"/>
+    <rdfs:subClassOf rdf:nodeID="N74fbdcdbbf694d7db07cd8819e7e1996"/>
+    <owl:hasKey rdf:nodeID="N4a672614dd5f4593921cd447c3de28b7"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#BallReceipt">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Ball Receipt</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Ball Receipt*'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Substitution">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Substitution</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Substitution'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#sbPlayerId">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">StatsBomb player id</rdfs:label>
+    <rdfs:comment xml:lang="en">Source key (UK_SbPlayerId).</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Player"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N6f5d2c6f18a24aef8a9e6c4e7d7a121a">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Player"/>
+    <rdf:rest rdf:nodeID="Ne3563fc03a234ecc842b4d8411db89a2"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Clearance">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Clearance</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Clearance'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N47cba6481b894f4793a6e4b0126faf0f">
+    <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">59</xsd:maxInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#second">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">second</rdfs:label>
+    <rdfs:comment xml:lang="en">Part of 'match time': second within the minute (CK_MatchEvent_Second).</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+    <rdfs:range rdf:nodeID="N5223cd29707746b49c29825803a200e6"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#performed">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">performed</rdfs:label>
+    <rdfs:comment xml:lang="en">Inverse of performedBy.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Player"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+    <owl:inverseOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#performedBy"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#sbEventUuid">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">StatsBomb event uuid</rdfs:label>
+    <rdfs:comment xml:lang="en">Source key (UK_SbEventUuid).</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Offside">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Offside</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Offside'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N20c5df2a130d4a3fab0b6d817689959f">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#InjuryStoppage"/>
+    <rdf:rest rdf:nodeID="Nd82427cd9ae048f5b139030df7f667f3"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#BadBehaviour">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Bad Behaviour</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Bad Behaviour'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Carry">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Carry</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Carry'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Error">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Error</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Error'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#intendedFor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">intended for</rdfs:label>
+    <rdfs:comment xml:lang="en">The pass's named target (StatsBomb pass.recipient). An intended target, not a guaranteed receipt: incomplete passes keep it too.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Pass"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Player"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N39f8f7eafaf84283b3fbc4d8ae893a41">
+    <rdf:first rdf:nodeID="N47cba6481b894f4793a6e4b0126faf0f"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1eeb1574a174429cb5230f1b0d5b09cf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="Ncb55b3c0520c47df88e49eb7c79d1e6d"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1a170f32dea04c8eb71ad9511920262c">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Appearance"/>
+    <rdf:rest rdf:nodeID="Ne41377efdb754fbb846903f00fdd2fd7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne3104383b1914c7caaf9ae03b77e92e2">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#sbPlayerId"/>
+    <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N2558d7759b84443d92fa21ac13715374">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Dribble"/>
+    <rdf:rest rdf:nodeID="Ne47eeb3a92a744d6a4819c3fdca85e12"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#BallRecovery">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Ball Recovery</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Ball Recovery'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#FiftyFifty">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">50/50</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type '50/50'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#awayTeam">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">away team</rdfs:label>
+    <rdfs:comment xml:lang="en">The away side; replaces the relationship attribute HomeOrAway = 'Away'.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Match"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Team"/>
+    <rdfs:subPropertyOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#hasTeam"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#sbTeamId">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">StatsBomb team id</rdfs:label>
+    <rdfs:comment xml:lang="en">Source key (UK_SbTeamId).</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Team"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#kickOff">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">kick-off</rdfs:label>
+    <rdfs:comment xml:lang="en">Kick-off date and time as given by StatsBomb (relational MatchDate plus kick-off time). xsd:dateTime instead of xsd:date because xsd:date is not in the OWL 2 datatype map.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Match"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Match event</rdfs:label>
+    <rdfs:comment xml:lang="en">A timestamped on-ball or off-ball action performed by one player in one match (entity set MatchEvent). Specialised by event type (IS-A).</rdfs:comment>
+    <rdfs:subClassOf rdf:nodeID="N17bdb79167144159996377869a2d8836"/>
+    <rdfs:subClassOf rdf:nodeID="N1a69afa2f0b6469c907c22a83c211fdd"/>
+    <rdfs:subClassOf rdf:nodeID="Nfa4005daba24437da5cacb7215c3c99e"/>
+    <rdfs:subClassOf rdf:nodeID="N722b848b091c4e0f9e093b07d0c681b6"/>
+    <rdfs:subClassOf rdf:nodeID="N0923a95705074e88a3aa66a6111162ca"/>
+    <rdfs:subClassOf rdf:nodeID="N716d6639e54a46669dd0a044b3835729"/>
+    <rdfs:subClassOf rdf:nodeID="Nb7be786d50db44f79646b6454e875bef"/>
+    <owl:hasKey rdf:nodeID="N4a2c77efd4284484b6869c1c6f9b33b1"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nb6b1feea15de4aef889d23b44d4ed894">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#homeTeam"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    <owl:onClass rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Team"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Pressure">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Pressure</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Pressure'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#PlayerOn">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Player On</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Player On'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#homeTeam">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">home team</rdfs:label>
+    <rdfs:comment xml:lang="en">The home side; replaces the relationship attribute HomeOrAway = 'Home'.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Match"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Team"/>
+    <rdfs:subPropertyOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#hasTeam"/>
+    <owl:propertyDisjointWith rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#awayTeam"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#performedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">performed by</rdfs:label>
+    <rdfs:comment xml:lang="en">Relationship 'performed by' (Player 1 : 0..N MatchEvent).</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Player"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#hasEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">has event</rdfs:label>
+    <rdfs:comment xml:lang="en">Inverse of inMatch (relationship 'contains').</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Match"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+    <owl:inverseOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#inMatch"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N3317c7fc357f4b09befb934480f63ce5">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <owl:withRestrictions rdf:nodeID="N4f9cefc8976d4567a4cb22d658deae1c"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nfa4005daba24437da5cacb7215c3c99e">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#sbEventUuid"/>
+    <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#playsIn">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">plays in</rdfs:label>
+    <rdfs:comment xml:lang="en">Inverse of hasTeam.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Team"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Match"/>
+    <owl:inverseOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#hasTeam"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne3563fc03a234ecc842b4d8411db89a2">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Match"/>
+    <rdf:rest rdf:nodeID="N1a170f32dea04c8eb71ad9511920262c"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Na220d004467542529a68959e002844d8">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Substitution"/>
+    <rdf:rest rdf:nodeID="Nab1936b5be02427b84608c48f957cf87"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nffe3a417aa1245f2866f31736f2b0803">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:unionOf rdf:nodeID="N08d36682e0f14c86937ac64d4ae0835d"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Match">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Match</rdfs:label>
+    <rdfs:comment xml:lang="en">A Bundesliga match of the 2023/24 season (entity set Match).</rdfs:comment>
+    <rdfs:subClassOf rdf:nodeID="Nb6b1feea15de4aef889d23b44d4ed894"/>
+    <rdfs:subClassOf rdf:nodeID="Nc73bae4bd56947b88018d3510600a832"/>
+    <rdfs:subClassOf rdf:nodeID="Nac2e6d9d316247649d68064e2da51f62"/>
+    <rdfs:subClassOf rdf:nodeID="Na8d88046bb7f4ee5819c64f5dd7a96ef"/>
+    <rdfs:subClassOf rdf:nodeID="Nc984126ceb1c4f2695f6f31498d3e922"/>
+    <rdfs:subClassOf rdf:nodeID="N1d610d2c38b044638dfab96a0409da0c"/>
+    <owl:hasKey rdf:nodeID="N2cb9ceafb23a4b55904d3068652013e8"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nab1936b5be02427b84608c48f957cf87">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#FiftyFifty"/>
+    <rdf:rest rdf:nodeID="N20c5df2a130d4a3fab0b6d817689959f"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N4d2af9176eea4470a08a86405c20cd47">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Duel"/>
+    <rdf:rest rdf:nodeID="N2bf14a88462b43c5832a4f76905c3519"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne2a8b7dc3e9e416fb97be063ba0ee9a6">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#intendedFor"/>
+    <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+    <owl:onClass rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Player"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Block">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Block</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Block'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#appearanceOf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">appearance of</rdfs:label>
+    <rdfs:comment xml:lang="en">The player of an appearance.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Appearance"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Player"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N17bdb79167144159996377869a2d8836">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#inMatch"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    <owl:onClass rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Match"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Interception">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Interception</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Interception'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N08c3c84498db4875a279df6abac045fc">
+    <rdf:first rdf:nodeID="Ne454cc056ee64b54b0406c1830ea3179"/>
+    <rdf:rest rdf:nodeID="N39f8f7eafaf84283b3fbc4d8ae893a41"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N44eae2997ce04404aba19028101c2537">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#appearanceOf"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    <owl:onClass rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Player"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#appearanceFor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">appearance for</rdfs:label>
+    <rdfs:comment xml:lang="en">The team the player appeared for.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Appearance"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Team"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#name">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">name</rdfs:label>
+    <rdfs:comment xml:lang="en">Name of a team or player.</rdfs:comment>
+    <rdfs:domain rdf:nodeID="Nffe3a417aa1245f2866f31736f2b0803"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N74fbdcdbbf694d7db07cd8819e7e1996">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#name"/>
+    <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nf08fd4b0efaf4d2bbd27c5c1505f1c03">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#name"/>
+    <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#appearanceIn">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">appearance in</rdfs:label>
+    <rdfs:comment xml:lang="en">The match of the appearance.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Appearance"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Match"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:label xml:lang="en">Beyond the Scoresheet: Bayer Leverkusen 2023/24 ontology</rdfs:label>
+    <dcterms:creator>Meet Hemang Shah; Sakshi Pinkeshkumar Patel; Ayush Bharatbhai Patel</dcterms:creator>
+    <dcterms:source rdf:resource="https://github.com/statsbomb/open-data"/>
+    <owl:versionInfo>1.0 (CSC 501 Milestone 5, Semantic Web)</owl:versionInfo>
+    <rdfs:comment xml:lang="en">Matches, teams, squads and timestamped player events of Bayer Leverkusen's 2023/24 Bundesliga season. Keeps the recorded player-event links explicit: performedBy, intendedFor (the pass's named target, not a guaranteed receipt) and assists (pass -&gt; shot).</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N45dd07d7abb249e8acb380b684d633c4">
+    <rdf:first rdf:nodeID="N6b9c4dd5e0574493b2d289f127661227"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Team">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Team</rdfs:label>
+    <rdfs:comment xml:lang="en">A football club (entity set Team).</rdfs:comment>
+    <rdfs:subClassOf rdf:nodeID="N5f700723c0df4fcd9ea23ef3040dfb42"/>
+    <rdfs:subClassOf rdf:nodeID="Nf08fd4b0efaf4d2bbd27c5c1505f1c03"/>
+    <owl:hasKey rdf:nodeID="N6481e41af9494decabe2607f5be65b8e"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1d610d2c38b044638dfab96a0409da0c">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#hasEvent"/>
+    <owl:someValuesFrom rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nc73bae4bd56947b88018d3510600a832">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#awayTeam"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    <owl:onClass rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Team"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#inMatch">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">in match</rdfs:label>
+    <rdfs:comment xml:lang="en">Relationship 'contains' (Match 1 : 1..N MatchEvent).</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Match"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Shield">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Shield</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Shield'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N5e825f22df454cad9860fbb3b324d35c">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#BallRecovery"/>
+    <rdf:rest rdf:nodeID="N4d2af9176eea4470a08a86405c20cd47"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Shot">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Shot</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Shot'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+    <rdfs:subClassOf rdf:nodeID="N75a9c70cabdd418b9318787cdf1639db"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nd408a618fd7f44879ff62c27c69609f3">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#assists"/>
+    <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+    <owl:onClass rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Shot"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#FoulCommitted">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Foul Committed</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Foul Committed'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nac2e6d9d316247649d68064e2da51f62">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#hasTeam"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:qualifiedCardinality>
+    <owl:onClass rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Team"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#OwnGoalAgainst">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Own Goal Against</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Own Goal Against'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N5a5e5fa53e0b43249e018c1d22a62018">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#DribbledPast"/>
+    <rdf:rest rdf:nodeID="Na220d004467542529a68959e002844d8"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Dribble">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Dribble</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Dribble'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#assistedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">assisted by</rdfs:label>
+    <rdfs:comment xml:lang="en">Inverse of assists.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Shot"/>
+    <rdfs:range rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Pass"/>
+    <owl:inverseOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#assists"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N4ec646a2b5a2403dbd5b1c538654647a">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#appearanceIn"/>
+    <rdf:rest rdf:nodeID="Nb6093c6b50614406aeb74583327d4bdb"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Dispossessed">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Dispossessed</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Dispossessed'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#sbMatchId">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">StatsBomb match id</rdfs:label>
+    <rdfs:comment xml:lang="en">Source key (UK_SbMatchId).</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Match"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N090202e85a8b4a4284066129448f8fb9">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+    <owl:members rdf:nodeID="N288c4823ba3d4fa1aa414683d9fd7c5c"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N08d36682e0f14c86937ac64d4ae0835d">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Team"/>
+    <rdf:rest rdf:nodeID="N52a990aa672644ee80d4c1486276bea5"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#FoulWon">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Foul Won</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Foul Won'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N5655188285924027aed25e32041cbdeb">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#BallReceipt"/>
+    <rdf:rest rdf:nodeID="N4bb64ed74a624d83a7801ac9d8d56286"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nb7be786d50db44f79646b6454e875bef">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#outcome"/>
+    <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ncb55b3c0520c47df88e49eb7c79d1e6d">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Shot"/>
+    <rdf:rest rdf:nodeID="N74a86a919d8247f0a6693d57fdb6e5f7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N74a86a919d8247f0a6693d57fdb6e5f7">
+    <rdf:first rdf:nodeID="N111505a8a7c54cfcabc4fe99874b6198"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#DribbledPast">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Dribbled Past</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Dribbled Past'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N4bb64ed74a624d83a7801ac9d8d56286">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Carry"/>
+    <rdf:rest rdf:nodeID="Nf2ef4504693a407387233d08a4e28281"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#outcome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label xml:lang="en">outcome</rdfs:label>
+    <rdfs:comment xml:lang="en">Event outcome, e.g. Complete, Incomplete, Goal, Saved. Optional (many types have none).</rdfs:comment>
+    <rdfs:domain rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N2fbfb67bd6ba49e2a1a271acb488660a">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#appearanceIn"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    <owl:onClass rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Match"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#InjuryStoppage">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Injury Stoppage</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Injury Stoppage'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N10c78eed71de49aa98a13a21e7246d1e">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#appearanceFor"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    <owl:onClass rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Team"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Miscontrol">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Miscontrol</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Miscontrol'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N03636f18334f4040a0f119c3238c86bf">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Offside"/>
+    <rdf:rest rdf:nodeID="Na4b3eeae73b149659fd1e99b383610a6"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N4a2c77efd4284484b6869c1c6f9b33b1">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#sbEventUuid"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#GoalKeeperAction">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Goal Keeper</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Goal Keeper'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#PlayerOff">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Player Off</rdfs:label>
+    <rdfs:comment xml:lang="en">StatsBomb event type 'Player Off'.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N2bf14a88462b43c5832a4f76905c3519">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Block"/>
+    <rdf:rest rdf:nodeID="N1e94ddf8d95c405ab62b1379181ff188"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Na4b3eeae73b149659fd1e99b383610a6">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#OwnGoalAgainst"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Appearance">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Appearance</rdfs:label>
+    <rdfs:comment xml:lang="en">Association class for the ternary relationship 'appears for': a player appears for a team in a match (relational table AppearsFor).</rdfs:comment>
+    <rdfs:subClassOf rdf:nodeID="N44eae2997ce04404aba19028101c2537"/>
+    <rdfs:subClassOf rdf:nodeID="N10c78eed71de49aa98a13a21e7246d1e"/>
+    <rdfs:subClassOf rdf:nodeID="N2fbfb67bd6ba49e2a1a271acb488660a"/>
+    <owl:hasKey rdf:nodeID="N4ec646a2b5a2403dbd5b1c538654647a"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N4a672614dd5f4593921cd447c3de28b7">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#sbPlayerId"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nd82427cd9ae048f5b139030df7f667f3">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Shield"/>
+    <rdf:rest rdf:nodeID="Ndc50654b2aab4d26b54d0aa5d38ee658"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nc984126ceb1c4f2695f6f31498d3e922">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#kickOff"/>
+    <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nd1260a96e1a048a08988a6a512163fd7">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Interception"/>
+    <rdf:rest rdf:nodeID="N3989298ed4ab486a94bc22395390310d"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nc7e71f9d053449b4854253c24b55c95a">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#GoalKeeperAction"/>
+    <rdf:rest rdf:nodeID="N5d2be793c43645f58cff843d8551641b"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N75a9c70cabdd418b9318787cdf1639db">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#assistedBy"/>
+    <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+    <owl:onClass rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Pass"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne85318223b4b4b08bb9acdc5663dd371">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#FoulCommitted"/>
+    <rdf:rest rdf:nodeID="Nd1260a96e1a048a08988a6a512163fd7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N0923a95705074e88a3aa66a6111162ca">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#minute"/>
+    <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1e94ddf8d95c405ab62b1379181ff188">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Clearance"/>
+    <rdf:rest rdf:nodeID="Nc7e71f9d053449b4854253c24b55c95a"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N409baeacedf9409b9a33b4fc7532eb64">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Error"/>
+    <rdf:rest rdf:nodeID="N03636f18334f4040a0f119c3238c86bf"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N5d2be793c43645f58cff843d8551641b">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Shot"/>
+    <rdf:rest rdf:nodeID="N2558d7759b84443d92fa21ac13715374"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nf00cd11767bf46f6bca1725770f02e87">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+    <owl:members rdf:nodeID="N970e51cab6d64b7cb6bec288dd80e6e7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N5cbe4eb628a84841a190d46fceeb4541">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#PlayerOff"/>
+    <rdf:rest rdf:nodeID="N17f219b111b24695ab78abe6ae912961"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N52a990aa672644ee80d4c1486276bea5">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Player"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N722b848b091c4e0f9e093b07d0c681b6">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#period"/>
+    <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne454cc056ee64b54b0406c1830ea3179">
+    <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</xsd:minInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Goal">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Goal</rdfs:label>
+    <rdfs:comment xml:lang="en">A shot whose outcome is 'Goal' (defined class).</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Shot"/>
+    <owl:equivalentClass rdf:nodeID="N1eeb1574a174429cb5230f1b0d5b09cf"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N6481e41af9494decabe2607f5be65b8e">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#sbTeamId"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne47eeb3a92a744d6a4819c3fdca85e12">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Miscontrol"/>
+    <rdf:rest rdf:nodeID="N9c0deaf3fde74861b5320fc0f7326c7f"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N111505a8a7c54cfcabc4fe99874b6198">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#outcome"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Goal</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Na8d88046bb7f4ee5819c64f5dd7a96ef">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#sbMatchId"/>
+    <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nf2ef4504693a407387233d08a4e28281">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#Pressure"/>
+    <rdf:rest rdf:nodeID="N5e825f22df454cad9860fbb3b324d35c"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ndc50654b2aab4d26b54d0aa5d38ee658">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#BadBehaviour"/>
+    <rdf:rest rdf:nodeID="N5cbe4eb628a84841a190d46fceeb4541"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne41377efdb754fbb846903f00fdd2fd7">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#MatchEvent"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N2cb9ceafb23a4b55904d3068652013e8">
+    <rdf:first rdf:resource="https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#sbMatchId"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N6b9c4dd5e0574493b2d289f127661227">
+    <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</xsd:maxInclusive>
+  </rdf:Description>
+</rdf:RDF>

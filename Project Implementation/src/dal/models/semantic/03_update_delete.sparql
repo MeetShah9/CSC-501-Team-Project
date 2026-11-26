@@ -1,0 +1,97 @@
+# =============================================================================
+# 03_update_delete.sparql -- UPDATE and DELETE demonstrations (SPARQL 1.1 Update)
+# SPARQL has no UPDATE keyword: an update is DELETE old triples + INSERT new ones
+# in one request (DELETE { } INSERT { } WHERE { }).
+# Run in order. `python main.py kg-demo` runs them on a scratch COPY of the graph,
+# so the real graph is untouched, and prints the triple count before and after
+# each block (a refused guarded delete changes nothing).
+#
+# Unlike SQL, the store does NOT refuse a delete that leaves dangling references
+# (there are no foreign keys under the Open World Assumption). The guarded
+# deletes below put the "RESTRICT" rule into the WHERE clause instead, and
+# 04_integrity_checks.sparql finds anything left dangling.
+# =============================================================================
+
+# name: select_before_update | Check the WHERE pattern with a SELECT before updating
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+SELECT ?p ?name
+WHERE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?p a lev:Player ; lev:sbPlayerId 40724 ; lev:name ?name } }
+
+# name: update_player_name | UPDATE a single value (correct a name)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+DELETE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> { ?p lev:name ?old } }
+INSERT { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> { ?p lev:name "Florian Richard Wirtz" } }
+WHERE  { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?p a lev:Player ; lev:sbPlayerId 40724 ; lev:name ?old } }
+
+# name: update_event_outcome | UPDATE an event: re-classify one shot as Saved (also drops its lev:Goal type)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+DELETE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> { ?e lev:outcome ?old . ?e a lev:Goal } }
+INSERT { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> { ?e lev:outcome "Saved" } }
+WHERE  { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?e lev:sbEventUuid "5085715b-09f6-403c-8b67-a546bcfed0ec" ; lev:outcome ?old } }
+
+# name: update_event_time | UPDATE the composite attribute match time (minute 67 -> 68)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+DELETE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> { ?e lev:minute ?m } }
+INSERT { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> { ?e lev:minute 68 } }
+WHERE  { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?e lev:sbEventUuid "5085715b-09f6-403c-8b67-a546bcfed0ec" ; lev:minute ?m } }
+
+# name: delete_unreferenced_event | DELETE an event nobody references (all of its triples)
+# Wirtz's carry at 45:04 of the second half; the guard makes sure no triple points to it.
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+DELETE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> { ?e ?p ?o } }
+WHERE  { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?e lev:sbEventUuid "6645f392-3334-4a7e-aa05-e61ba0781d95" ; ?p ?o .
+  FILTER NOT EXISTS { ?any ?ref ?e } } }
+
+# name: delete_referenced_shot_guarded | Guarded DELETE of a shot that a pass assists (RESTRICT in WHERE)
+# The FILTER NOT EXISTS plays the role of the relational FK: nothing is deleted.
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+DELETE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> { ?e ?p ?o } }
+WHERE  { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?e lev:sbEventUuid "5085715b-09f6-403c-8b67-a546bcfed0ec" ; ?p ?o .
+  FILTER NOT EXISTS { ?pass lev:assists ?e } } }
+
+# name: delete_player_guarded | Guarded DELETE of a player who still has events (refused by the WHERE)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+DELETE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> { ?p ?x ?y } }
+WHERE  { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?p lev:sbPlayerId 40724 ; ?x ?y .
+  FILTER NOT EXISTS { ?e lev:performedBy ?p }
+  FILTER NOT EXISTS { ?e2 lev:intendedFor ?p } } }
+
+# name: delete_player_cascade | DELETE a player who has no events, with his appearances (CASCADE in one request)
+# Removes the "Demo Player" inserted by 01_insert.sparql only if he has no events left.
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+DELETE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?p ?x ?y . ?app ?ap ?ao } }
+WHERE  { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?p lev:name "Demo Player" ; ?x ?y .
+  OPTIONAL { ?app lev:appearanceOf ?p ; ?ap ?ao }
+  FILTER NOT EXISTS { ?e lev:performedBy ?p } } }
+
+# name: delete_unguarded_dangling | UNGUARDED DELETE: removes a shot that a pass still assists
+# The store accepts it and leaves the pass pointing at a resource with no type.
+# 04_integrity_checks.sparql (dangling_assist) then reports the broken link.
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+DELETE { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> { ?e ?p ?o } }
+WHERE  { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  ?e lev:sbEventUuid "5085715b-09f6-403c-8b67-a546bcfed0ec" ; ?p ?o } }
+
+# name: duplicate_team_name | INSERT a second team with an existing name (accepted: no UNIQUE in RDF)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+INSERT DATA { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  lev:team_999 a lev:Team ; lev:sbTeamId 999 ; lev:name "Bayer Leverkusen" } }
+
+# name: bad_second | INSERT a second value of 75 (accepted by the store; rejected by an OWL reasoner and the UI)
+PREFIX lev: <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen#>
+INSERT DATA { GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/> {
+  lev:event_bad-0001 a lev:Pass ; lev:sbEventUuid "bad-0001" ; lev:inMatch lev:match_3895302 ;
+      lev:performedBy lev:player_9195 ; lev:period 1 ; lev:minute 3 ; lev:second 75 } }
+
+# name: clear_graph_commented | CLEAR removes every triple of a graph (kept commented: destructive)
+# CLEAR GRAPH <https://github.com/MeetShah9/CSC-501-Team-Project/leverkusen/>
+SELECT ("CLEAR is not executed by the demo" AS ?note) WHERE { }

@@ -1,0 +1,3 @@
+{% macro clock(e) -%}<span class="clock"><i>P{{ e.period }}</i>{{ e.minute }}:{{ '%02d'|format(e.second) }}</span>{%- endmacro %}
+{% macro day(ko) -%}{{ (ko or '')[:10] }}{%- endmacro %}
+{% macro match_label(m) -%}{{ m.kickOff[:10] }} · {{ m.opponent }} ({{ m.venue[0] }}){%- endmacro %}
