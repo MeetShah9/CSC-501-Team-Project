@@ -19,7 +19,7 @@ Scopes
 import json
 from pathlib import Path
 
-from rdflib import Graph, Literal, Namespace
+from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, XSD
 
 from src.biz.etl import event_outcome
